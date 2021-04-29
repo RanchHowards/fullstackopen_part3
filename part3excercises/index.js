@@ -1,5 +1,7 @@
+const { json } = require('express')
 const express = require('express')
 const app = express()
+const morgan = require('morgan')
 
 let persons = [
     {
@@ -61,7 +63,20 @@ let persons = [
 
 const generateId = () => Math.floor(Math.random() * 1000000)
 
+morgan.token('weener', function (req, res) { return JSON.stringify(req.body) })
+
 app.use(express.json())
+
+app.use(morgan((function (tokens, req, res) {
+    return [
+        tokens.method(req, res),
+        tokens.url(req, res),
+        tokens.status(req, res),
+        tokens.res(req, res, 'content-length'), '-',
+        tokens['response-time'](req, res), 'ms',
+        tokens['weener'](req, res),
+    ].join(' ')
+})))
 
 app.get('/', (req, res) => {
     res.send("hello world")
