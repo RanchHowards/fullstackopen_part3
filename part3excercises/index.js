@@ -67,16 +67,18 @@ morgan.token('weener', function (req, res) { return JSON.stringify(req.body) })
 
 app.use(express.json())
 
-app.use(morgan((function (tokens, req, res) {
-    return [
-        tokens.method(req, res),
-        tokens.url(req, res),
-        tokens.status(req, res),
-        tokens.res(req, res, 'content-length'), '-',
-        tokens['response-time'](req, res), 'ms',
-        tokens['weener'](req, res),
-    ].join(' ')
-})))
+// app.use(morgan((function (tokens, req, res) {
+//     return [
+//         tokens.method(req, res),
+//         tokens.url(req, res),
+//         tokens.status(req, res),
+//         tokens.res(req, res, 'content-length'), '-',
+//         tokens['response-time'](req, res), 'ms',
+//         tokens['weener'](req, res),
+//     ].join(' ')
+// })))
+
+app.use(express.static('build'))
 
 app.get('/', (req, res) => {
     res.send("hello world")
@@ -120,7 +122,7 @@ app.get('/api/persons/:id', (req, res) => {
     }
     else res.status(404).end()
 })
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 
 app.delete('/api/persons/:id', (req, res) => {
     const id = Number(req.params.id)
@@ -130,5 +132,5 @@ app.delete('/api/persons/:id', (req, res) => {
 
 })
 app.listen(PORT, () => {
-    console.log(`listening on port ${PORT}`);
+    console.log(`server running on ${PORT}`);
 })
