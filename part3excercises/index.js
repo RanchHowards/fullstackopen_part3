@@ -122,7 +122,7 @@ app.get('/api/persons/:id', (req, res) => {
     }
     else res.status(404).end()
 })
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001
 
 app.delete('/api/persons/:id', (req, res) => {
     const id = Number(req.params.id)
