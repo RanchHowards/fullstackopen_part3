@@ -6,3 +6,7 @@ Content-Type: application/json
 
 {"name": "SANChez el Cook",
 "number": 444}
+
+###
+
+DELETE http://localhost:3001/api/persons/60900033b4b8945ece24dbc5
